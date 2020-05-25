@@ -41,18 +41,67 @@
 <body>
 
     <!--as you can notice theirs a data-bind attribute-->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
     <p>First name: <strong data-bind="text:firstName">todo</strong></p>
+    <!--
+        this is a basic p tag
+        but inside it the strong tag which makes it bold 
+        binds the text to firstName defined in the viewModel
+    -->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+  
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
     <p>Last name: <strong data-bind="text:lastName">todo</strong></p>
-   
+    <!--
+        this is a basic p tag
+        but inside it the strong tag which makes it bold 
+        binds the text to lastName defined in the viewModel
+    -->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+  
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
     <input type="text" data-bind="value:firstName"/>
+    <!---
+    this is a simple input text box which has a data-bind
+    which binds its value to the firstName viewModel 
+    -->
     <input type="text" data-bind="value:lastName"/>
+    <!---
+    this is a simple input text box which has a data-bind
+    which binds its value to the lastName viewModel 
+    -->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+
 
     <h1 data-bind="text:fullName"></h1>
 
-
-    <button data-bind="click:capital">Capitalize</button>
-   
-
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+    <button data-bind="click:capital">Capitalize</button>       
+    <!---
+    binds to a function defined in the view model as 
+    capital 
+    it only capitalizes the lastName 
+    so if you want to update this to include the firstName
+    have a try
+    -->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+<!-------------------------------------------------------------------->
+  
     <!---
     Yep- you can use script tags in the middle of html lol
     i don't know if thats allowed or considered normal but... 
@@ -93,9 +142,6 @@
                 var currentVal= this.lastName();
                 this.lastName(currentVal.toUpperCase());
             }
-
-
-
         }
 
 
