@@ -46,25 +46,33 @@
    <script>
         // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
         function AppViewModel() {
+
+            //declare your own observable
+            //this.{your own name-observable name}= ko.observable("{put any value here}")
+            //now in the html you can make a p tag and use the data-bind="text:{name of observable}"
             
+            //declared 2 observables
             this.firstName = ko.observable("Bert");
             this.lastName = ko.observable("tom")
 
-            //computed
+            //declared a computed value
             this.fullName= ko.computed(()=>{
                 return this.firstName()+" "+this.lastName()
             })
 
-            //functions
+            //declared a function
             this.capital= function(){
                 var currentVal= this.lastName();
                 this.lastName(currentVal.toUpperCase());
             }
 
 
+
         }
 
-        // Activates knockout.js
+
+        // Activates knockout.js and binds dom to the appview model - not important right now
+
         ko.applyBindings(new AppViewModel());
     </script>
 
