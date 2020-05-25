@@ -52,15 +52,26 @@
             //now in the html you can make a p tag and use the data-bind="text:{name of observable}"
             
             //declared 2 observables
+            //observables allow you to define values that are observed and updated in realtime
+            //so if you bind in the html and the data changes then its updated automatically without
+            //managing ui code
             this.firstName = ko.observable("Bert");
             this.lastName = ko.observable("tom")
 
             //declared a computed value
+            //a computed value is basically similiar to observable but its used for making
+            //read only data, you do not typically change computed values like observerbales 
+            //so if you have 2 observables and want to display data, you can use 2 data-binds or you can
+            //create 1 computed to make it nicer and cleaner code
             this.fullName= ko.computed(()=>{
                 return this.firstName()+" "+this.lastName()
             })
 
             //declared a function
+            //you can bind buttons to functions in the dom
+            //here you can declare any function right now
+            //this code creates a currentval variable which is assigned to grab the lastName ko.observable value
+            //and then sets lastName to be uppercase of its currentVal
             this.capital= function(){
                 var currentVal= this.lastName();
                 this.lastName(currentVal.toUpperCase());
@@ -72,8 +83,9 @@
 
 
         // Activates knockout.js and binds dom to the appview model - not important right now
-
         ko.applyBindings(new AppViewModel());
+
+        
     </script>
 
 </body>
