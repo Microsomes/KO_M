@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='knockout-3.5.1.js'></script>
+
+</head>
+
+<!----
+
+    This is for anyone who wants to learn about some advanced
+    techniques in web development.
+
+    I pesonally don't use KO but its a good thing to leanr
+
+    This is for my friend wajid so
+
+
+    1) Notice in the P tags i use data-bind followed by the attribute im binding to for example for P tag its text and for button its click because 
+    i am calling a function
+
+    2) The data binds- bind to the viewModel in the javascript
+
+    3) If you have any questions do ask.
+
+
+-->
+
+<body>
+
+    <!--as you can notice theirs a data-bind attribute-->
+    <p>First name: <strong data-bind="text:firstName">todo</strong></p>
+    <p>Last name: <strong data-bind="text:lastName">todo</strong></p>
+   
+    <input type="text" data-bind="value:firstName"/>
+    <input type="text" data-bind="value:lastName"/>
+
+    <h1 data-bind="text:fullName"></h1>
+
+
+    <button data-bind="click:capital">Capitalize</button>
+   
+   <script>
+        // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
+        function AppViewModel() {
+            
+            this.firstName = ko.observable("Bert");
+            this.lastName = ko.observable("tom")
+
+            //computed
+            this.fullName= ko.computed(()=>{
+                return this.firstName()+" "+this.lastName()
+            })
+
+            //functions
+            this.capital= function(){
+                var currentVal= this.lastName();
+                this.lastName(currentVal.toUpperCase());
+            }
+
+
+        }
+
+        // Activates knockout.js
+        ko.applyBindings(new AppViewModel());
+    </script>
+
+</body>
+
+</html>
