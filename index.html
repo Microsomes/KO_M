@@ -1,4 +1,3 @@
-
 <!---
 
     @author Tayyab Javed
@@ -42,74 +41,26 @@
 
 <body>
 
-    <!--as you can notice theirs a data-bind attribute-->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-    <p>First name: <strong data-bind="text:firstName">todo</strong></p>
-    <!--
-        this is a basic p tag
-        but inside it the strong tag which makes it bold 
-        binds the text to firstName defined in the viewModel
-    -->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-  
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-    <p>Last name: <strong data-bind="text:lastName">todo</strong></p>
-    <!--
-        this is a basic p tag
-        but inside it the strong tag which makes it bold 
-        binds the text to lastName defined in the viewModel
-    -->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-  
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-    <input type="text" data-bind="value:firstName"/>
-    <!---
-    this is a simple input text box which has a data-bind
-    which binds its value to the firstName viewModel 
-    -->
-    <input type="text" data-bind="value:lastName"/>
-    <!---
-    this is a simple input text box which has a data-bind
-    which binds its value to the lastName viewModel 
-    -->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
+
+    <table>
+        <thead><tr>
+            <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
+        </tr></thead>
 
 
-    <h1 data-bind="text:fullName"></h1>
+        <tbody data-bind="foreach:seats">
+            <tr>
+                <td data-bind="text:name">d</td>
+                <td data-bind="text: meal().mealName"></td>
+                <td data-bind="text: meal().price"></td>
+            </tr>
+        </tbody>
 
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-    <button data-bind="click:capital">Capitalize</button>       
-    <!---
-    binds to a function defined in the view model as 
-    capital 
-    it only capitalizes the lastName 
-    so if you want to update this to include the firstName
-    have a try
-    -->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-<!-------------------------------------------------------------------->
-  
-    <!---
-    Yep- you can use script tags in the middle of html lol
-    i don't know if thats allowed or considered normal but... 
+    </table>
 
-    -->
-   <script>
+
+    
+    <script>
         // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
         //this is the AppViewModel which is basically a way to define an obj you can ignore this for now and learn whats 
         //inside of it
@@ -118,7 +69,7 @@
             //declare your own observable
             //this.{your own name-observable name}= ko.observable("{put any value here}")
             //now in the html you can make a p tag and use the data-bind="text:{name of observable}"
-            
+
             //declared 2 observables
             //observables allow you to define values that are observed and updated in realtime
             //so if you bind in the html and the data changes then its updated automatically without
@@ -131,8 +82,8 @@
             //read only data, you do not typically change computed values like observerbales 
             //so if you have 2 observables and want to display data, you can use 2 data-binds or you can
             //create 1 computed to make it nicer and cleaner code
-            this.fullName= ko.computed(()=>{
-                return this.firstName()+" "+this.lastName()
+            this.fullName = ko.computed(() => {
+                return this.firstName() + " " + this.lastName()
             })
 
             //declared a function
@@ -140,15 +91,44 @@
             //here you can declare any function right now
             //this code creates a currentval variable which is assigned to grab the lastName ko.observable value
             //and then sets lastName to be uppercase of its currentVal
-            this.capital= function(){
-                var currentVal= this.lastName();
+            this.capital = function () {
+                var currentVal = this.lastName();
                 this.lastName(currentVal.toUpperCase());
             }
         }
 
+        //for the reserverations
+
+
+        function seatReservation(name, initalMeal) {
+            var self = this;
+            self.name = name;
+            self.meal = ko.observable(initalMeal)
+        }
+
+
+        function ReservationsViewModel() {
+            var self = this;
+
+            self.availableMeals = [
+                { mealName: "Standard (sandwich)", price: 0 },
+                { mealName: "Premium (lobster)", price: 34.95 },
+                { mealName: "Ultimate (whole zebra)", price: 290 }
+            ]
+
+
+            self.seats = ko.observableArray([
+                new seatReservation("Steve", self.availableMeals[0]),
+                new seatReservation("Bert", self.availableMeals[0])
+            ])
+
+        }
+
+        ko.applyBindings(new ReservationsViewModel());
+
 
         // Activates knockout.js and binds dom to the appview model - not important right now
-        ko.applyBindings(new AppViewModel());
+       // ko.applyBindings(new AppViewModel());
 
 
     </script>
