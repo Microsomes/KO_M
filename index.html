@@ -41,25 +41,42 @@
 
 <body>
 
-
+ 
     <table>
-        <thead><tr>
-            <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
-        </tr></thead>
+        <thead>
+            <tr>
+                <th>Passenger name</th>
+                <th>Meal</th>
+                <th>Surcharge</th>
+                <th></th>
+            </tr>
+        </thead>
 
 
         <tbody data-bind="foreach:seats">
             <tr>
-                <td data-bind="text:name">d</td>
-                <td data-bind="text: meal().mealName"></td>
+                <td>
+                    <input data-bind="value:name" type="text" />
+                </td>
+
+                <td><select data-bind="options:$root.availableMeals,value:meal,optionsText:'mealName'"></select></td>
+                <!-- <td data-bind="text: meal().mealName"></td> -->
+                <td data-bind="text:name"></td>
                 <td data-bind="text: meal().price"></td>
+                 <td data-bind="click:$root.removeSeat"><button>Remove</button></td>
             </tr>
         </tbody>
 
+        <button data-bind="click:addSeat,enable: seats().length<5">Add Reservation</button>
+
     </table>
 
+    <h3 data-bind="visible:totalSurcharge()>0">
+        Total Surcharge: $<span data-bind="text:totalSurcharge().toFixed(2)"></span>
+    </h3>
 
-    
+
+
     <script>
         // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
         //this is the AppViewModel which is basically a way to define an obj you can ignore this for now and learn whats 
@@ -107,6 +124,7 @@
         }
 
 
+
         function ReservationsViewModel() {
             var self = this;
 
@@ -121,6 +139,30 @@
                 new seatReservation("Steve", self.availableMeals[0]),
                 new seatReservation("Bert", self.availableMeals[0])
             ])
+
+            self.totalSurcharge = ko.computed(function () {
+                var total = 0;
+                for (var i = 0; i < self.seats().length; i++) {
+                    let d = self.seats()[i].meal().price
+
+                    console.log(d);
+
+                    total += d
+                }
+                return total;
+            })
+
+
+            //add another seat
+            self.addSeat = function () {
+                self.seats.push(
+                    new seatReservation("", self.availableMeals[0])
+                )
+            }
+            //remove 
+            self.removeSeat = function (seat) {
+                self.seats.remove(seat);
+            }
 
         }
 
